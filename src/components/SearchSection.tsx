@@ -1,26 +1,27 @@
 import { motion } from "framer-motion";
 import { fadeUp } from "../lib/animations";
+import { withBasePath } from "../lib/assetPath";
 
 const platforms = [
   {
     name: "Codex",
     description:
       "Shows up when your content is structured, trustworthy, and clear enough to be reused inside answers.",
-    icon: "/claude.png",
+    icon: "claude.png",
     glow: "radial-gradient(circle, rgba(61, 220, 151, 0.38) 0%, rgba(61, 220, 151, 0) 72%)",
   },
   {
     name: "Claude",
     description:
       "Rewards thoughtful explanations, strong context, and pages that feel genuinely useful to real people.",
-    icon: "/chat.png",
+    icon: "chat.png",
     glow: "radial-gradient(circle, rgba(251, 146, 60, 0.38) 0%, rgba(251, 146, 60, 0) 72%)",
   },
   {
     name: "Google AI",
     description:
       "Highlights pages that answer the full question directly, with authority, completeness, and clarity.",
-    icon: "/google.png",
+    icon: "google.png",
     glow: "radial-gradient(circle, rgba(148, 163, 184, 0.34) 0%, rgba(148, 163, 184, 0) 72%)",
   },
 ];
@@ -75,7 +76,7 @@ export default function SearchSection() {
                     className="relative z-10 flex h-full w-full items-center justify-center transition-transform duration-700 group-hover:scale-[1.14]"
                   >
                     <img
-                      src={platform.icon}
+                      src={withBasePath(platform.icon)}
                       alt={platform.name}
                       className="h-full w-full object-contain opacity-95 transition-opacity drop-shadow-[0_28px_60px_rgba(255,255,255,0.14)] group-hover:opacity-100"
                     />
