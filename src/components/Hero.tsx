@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { fadeUp } from "../lib/animations";
+import { withBasePath } from "../lib/assetPath";
 
 const avatars = [
   "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&h=100&auto=format&fit=crop&sat=-100",
@@ -18,7 +19,7 @@ export default function Hero() {
         className="absolute inset-0 w-full h-full object-cover z-0 opacity-80"
       >
         <source
-          src="/video.mp4"
+          src={withBasePath("video.mp4")}
           type="video/mp4"
         />
       </video>

@@ -1,6 +1,7 @@
 import { Instagram, Linkedin, Menu, X as CloseIcon, ArrowLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { withBasePath } from "../lib/assetPath";
 import { socialLinks, type SocialPlatform } from "../lib/socialLinks";
 
 const navLinks = ["Home", "How It Works", "Philosophy", "Use Cases"];
@@ -26,7 +27,7 @@ export default function Navbar() {
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-3">
             <img
-              src="/logo.png"
+              src={withBasePath("logo.png")}
               alt="HONO AI Logo"
               className="h-14 w-14 object-contain md:h-16 md:w-16"
               referrerPolicy="no-referrer"
