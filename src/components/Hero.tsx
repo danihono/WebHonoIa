@@ -10,13 +10,12 @@ const avatars = [
 export default function Hero() {
   return (
     <section className="relative min-h-screen w-full overflow-hidden flex flex-col items-center justify-end text-center px-6 pb-16 md:pb-24">
-      {/* Background Video */}
       <video
         autoPlay
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 grayscale blur-[2px]"
+        className="absolute inset-0 w-full h-full object-cover z-0 opacity-80"
       >
         <source
           src="/video.mp4"
@@ -24,13 +23,9 @@ export default function Hero() {
         />
       </video>
 
-      {/* Deep Black Overlays */}
-      <div className="absolute inset-0 z-[1] bg-black/60" />
-      <div className="absolute inset-0 z-[2] bg-gradient-to-b from-black/20 via-transparent to-black" />
+      <div className="absolute inset-x-0 bottom-0 z-[1] h-48 bg-gradient-to-b from-transparent via-background/70 to-background" />
 
-      {/* Content */}
-      <div className="relative z-10 max-w-5xl">
-        {/* Heading */}
+      <div className="relative z-10 max-w-5xl [text-shadow:0_12px_40px_rgba(0,0,0,0.45)]">
         <motion.h1
           {...fadeUp(0.4)}
           className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-[-1px] leading-[1.1] mb-4"
@@ -38,7 +33,6 @@ export default function Hero() {
           Get <span className="font-serif italic font-normal">Inspired</span> with Us.
         </motion.h1>
 
-        {/* Subtitle */}
         <motion.p
           {...fadeUp(0.6)}
           className="text-sm md:text-base text-hero-subtitle max-w-2xl mx-auto leading-relaxed"

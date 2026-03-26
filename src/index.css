@@ -59,11 +59,6 @@
   body {
     @apply bg-background text-foreground font-sans antialiased min-h-screen;
     background-color: #000;
-    background-image: 
-      radial-gradient(circle at 50% -10%, rgba(255, 255, 255, 0.03) 0%, transparent 40%),
-      radial-gradient(circle at 0% 100%, rgba(255, 255, 255, 0.02) 0%, transparent 30%),
-      url("data:image/svg+xml,%3Csvg width='400' height='400' viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='10' cy='10' r='0.5'/%3E%3Ccircle cx='150' cy='100' r='0.5'/%3E%3Ccircle cx='300' cy='250' r='0.5'/%3E%3Ccircle cx='50' cy='350' r='0.5'/%3E%3Ccircle cx='350' cy='50' r='0.5'/%3E%3Ccircle cx='200' cy='380' r='0.5'/%3E%3Ccircle cx='120' cy='220' r='0.5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    background-attachment: fixed;
   }
 }
 
