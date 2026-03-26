@@ -4,6 +4,7 @@ import SearchSection from "./components/SearchSection";
 import MissionSection from "./components/MissionSection";
 import SolutionSection from "./components/SolutionSection";
 import CTASection from "./components/CTASection";
+import ContactTeamSection from "./components/ContactTeamSection";
 import Footer from "./components/Footer";
 import PostHeroBackground from "./components/PostHeroBackground";
 
@@ -20,6 +21,7 @@ export default function App() {
           <MissionSection />
           <SolutionSection />
           <CTASection />
+          <ContactTeamSection />
           <Footer />
         </div>
       </div>
