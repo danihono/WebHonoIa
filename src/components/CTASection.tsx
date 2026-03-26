@@ -1,42 +1,389 @@
-import { motion } from "framer-motion";
-import { fadeUp } from "../lib/animations";
+import { motion, useReducedMotion } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ArrowUpRight } from "lucide-react";
+import { type CSSProperties, useLayoutEffect, useRef, useState } from "react";
 import { withBasePath } from "../lib/assetPath";
+import { cn } from "../lib/utils";
+
+interface ExplorationItem {
+  id: number;
+  title: string;
+  category: string;
+  image: string;
+  href?: string;
+}
+
+const explorations: ExplorationItem[] = [
+  {
+    id: 1,
+    title: "Celestial Planets",
+    category: "3D Visualization",
+    image: "/level.png",
+    href: "https://danihono.github.io/LEVEL/",
+  },
+  {
+    id: 2,
+    title: "ASCII Art Study",
+    category: "Generative Art",
+    image: "/advisor.png",
+    href: "https://www.followadvisor.com/",
+  },
+  {
+    id: 3,
+    title: "Atmospheric Smoke",
+    category: "Visual Effects",
+    image: "/labs.png",
+    href: "https://www.followlabs.com.br/",
+  },
+  {
+    id: 4,
+    title: "Abstract Cylinder",
+    category: "3D Rendering",
+    image: "/travessia.png",
+    href: "https://travessia.solutions/travessia.html",
+  },
+  {
+    id: 5,
+    title: "Organic Waves",
+    category: "Motion Design",
+    image: "/explorations/wave.jpeg",
+  },
+  {
+    id: 6,
+    title: "Geometric Cubes",
+    category: "3D Composition",
+    image: "/explorations/cubes.jpeg",
+  },
+];
+
+const halftoneStyle: CSSProperties = {
+  backgroundImage:
+    "radial-gradient(circle, rgba(255,255,255,0.22) 1px, transparent 1px)",
+  backgroundSize: "12px 12px",
+  backgroundPosition: "center",
+};
+gsap.registerPlugin(ScrollTrigger);
+
+interface ExplorationMediaProps {
+  item: ExplorationItem;
+  className?: string;
+  imageClassName?: string;
+  overlayClassName?: string;
+  priority?: boolean;
+}
+
+function ExplorationMedia({
+  item,
+  className,
+  imageClassName,
+  overlayClassName,
+  priority = false,
+}: ExplorationMediaProps) {
+  const [hasError, setHasError] = useState(false);
+  const source = withBasePath(item.image);
+
+  return (
+    <div className={cn("relative overflow-hidden", className)}>
+      {!hasError ? (
+        <img
+          src={source}
+          alt={item.title}
+          loading={priority ? "eager" : "lazy"}
+          className={cn("h-full w-full object-cover", imageClassName)}
+          onError={() => setHasError(true)}
+        />
+      ) : null}
+
+      <div
+        className={cn(
+          "absolute inset-0 transition-opacity duration-500",
+          hasError ? "opacity-100" : "opacity-0",
+          overlayClassName,
+        )}
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(125,211,252,0.3),transparent_28%),radial-gradient(circle_at_72%_62%,rgba(244,114,182,0.24),transparent_30%),linear-gradient(180deg,rgba(15,23,42,0.96),rgba(3,7,18,1))]" />
+        <div
+          className="absolute inset-0 opacity-35 mix-blend-soft-light"
+          style={halftoneStyle}
+        />
+        <div className="absolute inset-x-6 bottom-6 rounded-[24px] border border-white/10 bg-black/30 p-4 backdrop-blur-sm">
+          <p className="text-xs uppercase tracking-[0.28em] text-white/55">
+            Visual Placeholder
+          </p>
+          <p className="mt-2 text-lg font-medium tracking-tight text-white">
+            {item.title}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+interface ExplorationCardProps {
+  item: ExplorationItem;
+  reducedMotion: boolean | null;
+}
+
+function ExplorationCard({
+  item,
+  reducedMotion,
+}: ExplorationCardProps) {
+  const rotation = item.id % 2 === 0 ? 3.5 : -2.5;
+
+  return (
+    <motion.div
+      style={{ rotate: rotation }}
+      whileHover={reducedMotion ? undefined : { y: -10, scale: 1.015 }}
+      transition={{ type: "spring", stiffness: 220, damping: 20 }}
+      className="group relative mx-auto aspect-square w-full max-w-[320px] text-left"
+    >
+      <div className="absolute -inset-4 rounded-[40px] border border-white/10 bg-white/[0.02] shadow-[0_30px_90px_rgba(0,0,0,0.45)] transition duration-500 group-hover:border-white/20" />
+
+      <div className="relative h-full overflow-hidden rounded-[30px] border border-white/10 bg-black">
+        <ExplorationMedia
+          item={item}
+          className="absolute inset-0"
+          imageClassName="transition duration-700 ease-out group-hover:scale-105"
+        />
+
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04),rgba(0,0,0,0.1)_42%,rgba(0,0,0,0.4)_100%)]" />
+        {item.href ? (
+          <div className="absolute bottom-5 right-5">
+            <a
+              href={item.href}
+              target="_blank"
+              rel="noreferrer"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-black/55 text-white/82 transition duration-300 hover:border-white/28 hover:bg-black/72 hover:text-white"
+              aria-label={`Open ${item.title}`}
+            >
+              <ArrowUpRight className="h-4 w-4" />
+            </a>
+          </div>
+        ) : null}
+      </div>
+    </motion.div>
+  );
+}
 
 export default function CTASection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const leftColumnRef = useRef<HTMLDivElement>(null);
+  const rightColumnRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = useReducedMotion();
+
+  const leftItems = explorations.filter((item) => item.id % 2 === 0);
+  const rightItems = explorations.filter((item) => item.id % 2 === 1);
+
+  useLayoutEffect(() => {
+    if (
+      reducedMotion ||
+      !sectionRef.current ||
+      !contentRef.current ||
+      !leftColumnRef.current ||
+      !rightColumnRef.current
+    ) {
+      return;
+    }
+
+    const section = sectionRef.current;
+    const content = contentRef.current;
+    const leftColumn = leftColumnRef.current;
+    const rightColumn = rightColumnRef.current;
+
+    const context = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top top",
+        end: "bottom top",
+        pin: content,
+        pinSpacing: false,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      });
+
+      gsap.fromTo(
+        leftColumn,
+        { y: "24vh" },
+        {
+          y: "-72vh",
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1,
+            invalidateOnRefresh: true,
+          },
+        },
+      );
+
+      gsap.fromTo(
+        rightColumn,
+        { y: "52vh" },
+        {
+          y: "-40vh",
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1.5,
+            invalidateOnRefresh: true,
+          },
+        },
+      );
+
+      gsap.utils
+        .toArray<HTMLElement>("[data-exploration-card]")
+        .forEach((card) => {
+          const isInitial = card.dataset.initialVisible === "true";
+          const side = card.dataset.side === "right" ? 1 : -1;
+
+          if (isInitial) {
+            gsap.set(card, {
+              autoAlpha: 1,
+              x: 0,
+              y: 0,
+              scale: 1,
+              filter: "blur(0px)",
+              clipPath: "inset(0% 0% 0% 0% round 32px)",
+            });
+            return;
+          }
+
+          gsap.set(card, {
+            autoAlpha: 0,
+            x: 32 * side,
+            y: 56,
+            scale: 0.96,
+            filter: "blur(10px)",
+            clipPath: "inset(18% 0% 22% 0% round 32px)",
+          });
+
+          gsap.to(card, {
+            autoAlpha: 1,
+            x: 0,
+            y: 0,
+            scale: 1,
+            filter: "blur(0px)",
+            clipPath: "inset(0% 0% 0% 0% round 32px)",
+            ease: "none",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 96%",
+              end: "top 80%",
+              scrub: 1,
+              invalidateOnRefresh: true,
+            },
+          });
+        });
+
+    }, sectionRef);
+
+    ScrollTrigger.refresh();
+
+    return () => {
+      context.revert();
+    };
+  }, [reducedMotion]);
+
   return (
-    <section className="relative isolate overflow-hidden px-8 py-32 text-center md:px-28 md:py-44">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background via-background/90 to-transparent md:h-40" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_44%,rgba(59,130,246,0.08)_0%,rgba(16,185,129,0.05)_26%,rgba(0,0,0,0)_62%)]" />
+    <>
+      <section
+        ref={sectionRef}
+        className="relative min-h-[300vh] overflow-x-clip px-8 md:px-28"
+      >
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background via-background/85 to-transparent md:h-40" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_24%,rgba(59,130,246,0.12),transparent_26%),radial-gradient(circle_at_20%_72%,rgba(34,197,94,0.08),transparent_24%),radial-gradient(circle_at_80%_74%,rgba(236,72,153,0.1),transparent_26%)]" />
 
-      <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center rounded-[40px] border border-white/10 bg-black/20 p-12 shadow-[0_0_140px_rgba(37,99,235,0.14),0_0_110px_rgba(16,185,129,0.08)] backdrop-blur-xl md:p-20 liquid-glass">
-        <motion.div {...fadeUp(0.2)} className="mb-12">
-          <img src={withBasePath("logo.png")} alt="HONO AI Logo" className="w-12 h-12 object-contain mx-auto mb-8" referrerPolicy="no-referrer" />
-          <h2 className="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
-            Start Your <span className="font-serif italic font-normal">Journey</span>
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-xl mx-auto leading-relaxed">
-            Join thousands of readers and writers who are rediscovering the joy
-            of meaningful digital content.
-          </p>
-        </motion.div>
+        <div className="relative mx-auto min-h-[300vh] max-w-[1400px]">
+          <div
+            ref={contentRef}
+            className={cn(
+              "z-10 flex h-screen items-center justify-center py-16",
+              reducedMotion && "sticky top-0",
+            )}
+          >
+            <div className="mx-auto max-w-2xl px-4 text-center md:px-8">
+              <p className="text-sm font-medium uppercase tracking-[0.38em] text-white/55">
+                Explorations
+              </p>
+              <h2 className="mt-5 text-4xl font-medium tracking-tight text-white md:text-6xl lg:text-7xl">
+                Visual{" "}
+                <span className="font-serif text-white/95 italic font-normal">
+                  playground
+                </span>
+              </h2>
+              <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/68 md:text-lg">
+                A space for creative experiments, motion studies, and visual
+                explorations.
+              </p>
+            </div>
+          </div>
 
-        <motion.div {...fadeUp(0.4)} className="flex flex-col sm:flex-row items-center gap-4">
-          <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-            className="bg-foreground text-background font-bold text-sm tracking-widest rounded-lg px-10 py-4 uppercase transition-colors hover:bg-foreground/90"
-          >
-            Subscribe Now
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-            className="liquid-glass font-bold text-sm tracking-widest rounded-lg px-10 py-4 uppercase transition-colors hover:bg-white/5"
-          >
-            Start Writing
-          </motion.button>
-        </motion.div>
-      </div>
-    </section>
+          <div className="pointer-events-none absolute inset-0 z-20">
+            <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-36 bg-gradient-to-b from-background via-background/95 to-transparent md:h-44" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-36 bg-gradient-to-t from-background via-background/95 to-transparent md:h-44" />
+
+            <div className="grid min-h-full grid-cols-2 gap-16 px-2 md:gap-52 md:px-8 xl:gap-60">
+              <div
+                ref={leftColumnRef}
+                className="flex min-h-full flex-col items-end gap-10 pr-4 md:gap-16 md:pr-12 xl:pr-20"
+                style={reducedMotion ? undefined : { transform: "translateY(24vh)" }}
+              >
+                <div className="h-[82vh] shrink-0" />
+                {leftItems.map((item, index) => (
+                  <div
+                    key={item.id}
+                    data-exploration-card
+                    data-side="left"
+                    data-initial-visible="false"
+                    className="pointer-events-auto flex w-full justify-end"
+                    style={{ marginTop: index === 0 ? "0vh" : "62vh" }}
+                  >
+                    <div className="w-full max-w-[320px]">
+                      <ExplorationCard
+                        item={item}
+                        reducedMotion={reducedMotion}
+                      />
+                    </div>
+                  </div>
+                ))}
+                <div className="h-[80vh] shrink-0" />
+              </div>
+
+              <div
+                ref={rightColumnRef}
+                className="flex min-h-full flex-col items-start gap-10 pl-4 md:gap-16 md:pl-12 xl:pl-20"
+                style={reducedMotion ? undefined : { transform: "translateY(52vh)" }}
+              >
+                <div className="h-[108vh] shrink-0" />
+                {rightItems.map((item, index) => (
+                  <div
+                    key={item.id}
+                    data-exploration-card
+                    data-side="right"
+                    data-initial-visible="false"
+                    className="pointer-events-auto flex w-full justify-start"
+                    style={{ marginTop: index === 0 ? "0vh" : "62vh" }}
+                  >
+                    <div className="w-full max-w-[320px]">
+                      <ExplorationCard
+                        item={item}
+                        reducedMotion={reducedMotion}
+                      />
+                    </div>
+                  </div>
+                ))}
+                <div className="h-[80vh] shrink-0" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </>
   );
 }
