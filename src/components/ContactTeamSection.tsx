@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { withBasePath } from "../lib/assetPath";
+import type { LandingCopy } from "../lib/translations";
 import { socialLinks } from "../lib/socialLinks";
 
 const contactHref =
@@ -8,7 +9,13 @@ const contactHref =
   socialLinks[0]?.href ??
   "#";
 
-export default function ContactTeamSection() {
+interface ContactTeamSectionProps {
+  copy: LandingCopy["contact"];
+}
+
+export default function ContactTeamSection({
+  copy,
+}: ContactTeamSectionProps) {
   return (
     <section
       id="contact"
@@ -42,8 +49,8 @@ export default function ContactTeamSection() {
           className="liquid-glass inline-flex items-center gap-3 rounded-full px-6 py-3.5 text-sm font-medium tracking-[0.02em] text-white transition duration-300 hover:bg-white/10 hover:text-white md:px-7"
         >
           <span>
-            Talk with our{" "}
-            <span className="font-serif font-normal italic">team</span>
+            {copy.ctaPrefix}{" "}
+            <span className="font-serif font-normal italic">{copy.ctaHighlight}</span>
           </span>
           <ArrowUpRight className="h-4 w-4" />
         </a>

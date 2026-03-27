@@ -1,45 +1,45 @@
 import { motion } from "framer-motion";
 import { fadeUp } from "../lib/animations";
 import { withBasePath } from "../lib/assetPath";
+import type { LandingCopy } from "../lib/translations";
 
-const avatars = [
-  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&h=100&auto=format&fit=crop&sat=-100",
-  "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=100&h=100&auto=format&fit=crop&sat=-100",
-  "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=100&h=100&auto=format&fit=crop&sat=-100",
-];
+interface HeroProps {
+  copy: LandingCopy["hero"];
+}
 
-export default function Hero() {
+export default function Hero({ copy }: HeroProps) {
   return (
-    <section className="relative min-h-screen w-full overflow-hidden flex flex-col items-center justify-end text-center px-6 pb-16 md:pb-24">
+    <section
+      id="home"
+      className="relative min-h-screen w-full overflow-hidden px-6 pb-16 text-center md:pb-24"
+    >
       <video
         autoPlay
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover z-0 opacity-80"
+        className="absolute inset-0 z-0 h-full w-full object-cover opacity-80"
       >
-        <source
-          src={withBasePath("video.mp4")}
-          type="video/mp4"
-        />
+        <source src={withBasePath("video.mp4")} type="video/mp4" />
       </video>
 
       <div className="absolute inset-x-0 bottom-0 z-[1] h-48 bg-gradient-to-b from-transparent via-background/70 to-background" />
 
-      <div className="relative z-10 max-w-5xl [text-shadow:0_12px_40px_rgba(0,0,0,0.45)]">
+      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-end [text-shadow:0_12px_40px_rgba(0,0,0,0.45)]">
         <motion.h1
           {...fadeUp(0.4)}
-          className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-[-1px] leading-[1.1] mb-4"
+          className="mb-4 text-3xl font-medium leading-[1.1] tracking-[-1px] md:text-4xl lg:text-5xl"
         >
-          Get <span className="font-serif italic font-normal">Inspired</span> with Us.
+          {copy.titlePrefix}{" "}
+          <span className="font-serif font-normal italic">{copy.titleHighlight}</span>{" "}
+          {copy.titleSuffix}
         </motion.h1>
 
         <motion.p
           {...fadeUp(0.6)}
-          className="text-sm md:text-base text-hero-subtitle max-w-2xl mx-auto leading-relaxed"
+          className="mx-auto max-w-2xl text-sm leading-relaxed text-hero-subtitle md:text-base"
         >
-          Join our feed for meaningful updates, news around technology and a
-          shared journey toward depth and direction.
+          {copy.description}
         </motion.p>
       </div>
     </section>

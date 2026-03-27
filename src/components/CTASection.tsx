@@ -4,58 +4,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRight } from "lucide-react";
 import { type CSSProperties, useLayoutEffect, useRef, useState } from "react";
 import { withBasePath } from "../lib/assetPath";
+import type {
+  ExplorationItemCopy,
+  LandingCopy,
+} from "../lib/translations";
 import { cn } from "../lib/utils";
-
-interface ExplorationItem {
-  id: number;
-  title: string;
-  category: string;
-  image: string;
-  href?: string;
-}
-
-const explorations: ExplorationItem[] = [
-  {
-    id: 1,
-    title: "Celestial Planets",
-    category: "3D Visualization",
-    image: "/level.png",
-    href: "https://danihono.github.io/LEVEL/",
-  },
-  {
-    id: 2,
-    title: "ASCII Art Study",
-    category: "Generative Art",
-    image: "/advisor.png",
-    href: "https://www.followadvisor.com/",
-  },
-  {
-    id: 3,
-    title: "Atmospheric Smoke",
-    category: "Visual Effects",
-    image: "/labs.png",
-    href: "https://www.followlabs.com.br/",
-  },
-  {
-    id: 4,
-    title: "Abstract Cylinder",
-    category: "3D Rendering",
-    image: "/travessia.png",
-    href: "https://travessia.solutions/travessia.html",
-  },
-  {
-    id: 5,
-    title: "Organic Waves",
-    category: "Motion Design",
-    image: "/explorations/wave.jpeg",
-  },
-  {
-    id: 6,
-    title: "Geometric Cubes",
-    category: "3D Composition",
-    image: "/explorations/cubes.jpeg",
-  },
-];
 
 const halftoneStyle: CSSProperties = {
   backgroundImage:
@@ -63,10 +16,12 @@ const halftoneStyle: CSSProperties = {
   backgroundSize: "12px 12px",
   backgroundPosition: "center",
 };
+
 gsap.registerPlugin(ScrollTrigger);
 
 interface ExplorationMediaProps {
-  item: ExplorationItem;
+  item: ExplorationItemCopy;
+  placeholderLabel: string;
   className?: string;
   imageClassName?: string;
   overlayClassName?: string;
@@ -75,6 +30,7 @@ interface ExplorationMediaProps {
 
 function ExplorationMedia({
   item,
+  placeholderLabel,
   className,
   imageClassName,
   overlayClassName,
@@ -109,7 +65,7 @@ function ExplorationMedia({
         />
         <div className="absolute inset-x-6 bottom-6 rounded-[24px] border border-white/10 bg-black/30 p-4 backdrop-blur-sm">
           <p className="text-xs uppercase tracking-[0.28em] text-white/55">
-            Visual Placeholder
+            {placeholderLabel}
           </p>
           <p className="mt-2 text-lg font-medium tracking-tight text-white">
             {item.title}
@@ -121,12 +77,16 @@ function ExplorationMedia({
 }
 
 interface ExplorationCardProps {
-  item: ExplorationItem;
+  item: ExplorationItemCopy;
+  openItemLabel: string;
+  placeholderLabel: string;
   reducedMotion: boolean | null;
 }
 
 function ExplorationCard({
   item,
+  openItemLabel,
+  placeholderLabel,
   reducedMotion,
 }: ExplorationCardProps) {
   const rotation = item.id % 2 === 0 ? 3.5 : -2.5;
@@ -143,6 +103,7 @@ function ExplorationCard({
       <div className="relative h-full overflow-hidden rounded-[30px] border border-white/10 bg-black">
         <ExplorationMedia
           item={item}
+          placeholderLabel={placeholderLabel}
           className="absolute inset-0"
           imageClassName="transition duration-700 ease-out group-hover:scale-105"
         />
@@ -155,7 +116,7 @@ function ExplorationCard({
               target="_blank"
               rel="noreferrer"
               className="flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-black/55 text-white/82 transition duration-300 hover:border-white/28 hover:bg-black/72 hover:text-white"
-              aria-label={`Open ${item.title}`}
+              aria-label={`${openItemLabel} ${item.title}`}
             >
               <ArrowUpRight className="h-4 w-4" />
             </a>
@@ -166,15 +127,19 @@ function ExplorationCard({
   );
 }
 
-export default function CTASection() {
+interface CTASectionProps {
+  copy: LandingCopy["explorations"];
+}
+
+export default function CTASection({ copy }: CTASectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const leftColumnRef = useRef<HTMLDivElement>(null);
   const rightColumnRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
 
-  const leftItems = explorations.filter((item) => item.id % 2 === 0);
-  const rightItems = explorations.filter((item) => item.id % 2 === 1);
+  const leftItems = copy.items.filter((item) => item.id % 2 === 0);
+  const rightItems = copy.items.filter((item) => item.id % 2 === 1);
 
   useLayoutEffect(() => {
     if (
@@ -279,7 +244,6 @@ export default function CTASection() {
             },
           });
         });
-
     }, sectionRef);
 
     ScrollTrigger.refresh();
@@ -287,103 +251,104 @@ export default function CTASection() {
     return () => {
       context.revert();
     };
-  }, [reducedMotion]);
+  }, [copy.items, reducedMotion]);
 
   return (
-    <>
-      <section
-        ref={sectionRef}
-        className="relative min-h-[300vh] overflow-x-clip px-8 md:px-28"
-      >
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background via-background/85 to-transparent md:h-40" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_24%,rgba(59,130,246,0.12),transparent_26%),radial-gradient(circle_at_20%_72%,rgba(34,197,94,0.08),transparent_24%),radial-gradient(circle_at_80%_74%,rgba(236,72,153,0.1),transparent_26%)]" />
+    <section
+      id="explorations"
+      ref={sectionRef}
+      className="relative min-h-[300vh] overflow-x-clip px-8 md:px-28"
+    >
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background via-background/85 to-transparent md:h-40" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_24%,rgba(59,130,246,0.12),transparent_26%),radial-gradient(circle_at_20%_72%,rgba(34,197,94,0.08),transparent_24%),radial-gradient(circle_at_80%_74%,rgba(236,72,153,0.1),transparent_26%)]" />
 
-        <div className="relative mx-auto min-h-[300vh] max-w-[1400px]">
-          <div
-            ref={contentRef}
-            className={cn(
-              "z-10 flex h-screen items-center justify-center py-16",
-              reducedMotion && "sticky top-0",
-            )}
-          >
-            <div className="mx-auto max-w-2xl px-4 text-center md:px-8">
-              <p className="text-sm font-medium uppercase tracking-[0.38em] text-white/55">
-                Explorations
-              </p>
-              <h2 className="mt-5 text-4xl font-medium tracking-tight text-white md:text-6xl lg:text-7xl">
-                Visual{" "}
-                <span className="font-serif text-white/95 italic font-normal">
-                  playground
-                </span>
-              </h2>
-              <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/68 md:text-lg">
-                A space for creative experiments, motion studies, and visual
-                explorations.
-              </p>
-            </div>
+      <div className="relative mx-auto min-h-[300vh] max-w-[1400px]">
+        <div
+          ref={contentRef}
+          className={cn(
+            "z-10 flex h-screen items-center justify-center py-16",
+            reducedMotion && "sticky top-0",
+          )}
+        >
+          <div className="mx-auto max-w-2xl px-4 text-center md:px-8">
+            <p className="text-sm font-medium uppercase tracking-[0.38em] text-white/55">
+              {copy.eyebrow}
+            </p>
+            <h2 className="mt-5 text-4xl font-medium tracking-tight text-white md:text-6xl lg:text-7xl">
+              {copy.titlePrefix}{" "}
+              <span className="font-serif font-normal italic text-white/95">
+                {copy.titleHighlight}
+              </span>
+            </h2>
+            <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/68 md:text-lg">
+              {copy.description}
+            </p>
           </div>
+        </div>
 
-          <div className="pointer-events-none absolute inset-0 z-20">
-            <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-36 bg-gradient-to-b from-background via-background/95 to-transparent md:h-44" />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-36 bg-gradient-to-t from-background via-background/95 to-transparent md:h-44" />
+        <div className="pointer-events-none absolute inset-0 z-20">
+          <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-36 bg-gradient-to-b from-background via-background/95 to-transparent md:h-44" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-36 bg-gradient-to-t from-background via-background/95 to-transparent md:h-44" />
 
-            <div className="grid min-h-full grid-cols-2 gap-16 px-2 md:gap-52 md:px-8 xl:gap-60">
-              <div
-                ref={leftColumnRef}
-                className="flex min-h-full flex-col items-end gap-10 pr-4 md:gap-16 md:pr-12 xl:pr-20"
-                style={reducedMotion ? undefined : { transform: "translateY(24vh)" }}
-              >
-                <div className="h-[82vh] shrink-0" />
-                {leftItems.map((item, index) => (
-                  <div
-                    key={item.id}
-                    data-exploration-card
-                    data-side="left"
-                    data-initial-visible="false"
-                    className="pointer-events-auto flex w-full justify-end"
-                    style={{ marginTop: index === 0 ? "0vh" : "62vh" }}
-                  >
-                    <div className="w-full max-w-[320px]">
-                      <ExplorationCard
-                        item={item}
-                        reducedMotion={reducedMotion}
-                      />
-                    </div>
+          <div className="grid min-h-full grid-cols-2 gap-16 px-2 md:gap-52 md:px-8 xl:gap-60">
+            <div
+              ref={leftColumnRef}
+              className="flex min-h-full flex-col items-end gap-10 pr-4 md:gap-16 md:pr-12 xl:pr-20"
+              style={reducedMotion ? undefined : { transform: "translateY(24vh)" }}
+            >
+              <div className="h-[82vh] shrink-0" />
+              {leftItems.map((item, index) => (
+                <div
+                  key={item.id}
+                  data-exploration-card
+                  data-side="left"
+                  data-initial-visible="false"
+                  className="pointer-events-auto flex w-full justify-end"
+                  style={{ marginTop: index === 0 ? "0vh" : "62vh" }}
+                >
+                  <div className="w-full max-w-[320px]">
+                    <ExplorationCard
+                      item={item}
+                      openItemLabel={copy.openItemLabel}
+                      placeholderLabel={copy.placeholderLabel}
+                      reducedMotion={reducedMotion}
+                    />
                   </div>
-                ))}
-                <div className="h-[80vh] shrink-0" />
-              </div>
+                </div>
+              ))}
+              <div className="h-[80vh] shrink-0" />
+            </div>
 
-              <div
-                ref={rightColumnRef}
-                className="flex min-h-full flex-col items-start gap-10 pl-4 md:gap-16 md:pl-12 xl:pl-20"
-                style={reducedMotion ? undefined : { transform: "translateY(52vh)" }}
-              >
-                <div className="h-[108vh] shrink-0" />
-                {rightItems.map((item, index) => (
-                  <div
-                    key={item.id}
-                    data-exploration-card
-                    data-side="right"
-                    data-initial-visible="false"
-                    className="pointer-events-auto flex w-full justify-start"
-                    style={{ marginTop: index === 0 ? "0vh" : "62vh" }}
-                  >
-                    <div className="w-full max-w-[320px]">
-                      <ExplorationCard
-                        item={item}
-                        reducedMotion={reducedMotion}
-                      />
-                    </div>
+            <div
+              ref={rightColumnRef}
+              className="flex min-h-full flex-col items-start gap-10 pl-4 md:gap-16 md:pl-12 xl:pl-20"
+              style={reducedMotion ? undefined : { transform: "translateY(52vh)" }}
+            >
+              <div className="h-[108vh] shrink-0" />
+              {rightItems.map((item, index) => (
+                <div
+                  key={item.id}
+                  data-exploration-card
+                  data-side="right"
+                  data-initial-visible="false"
+                  className="pointer-events-auto flex w-full justify-start"
+                  style={{ marginTop: index === 0 ? "0vh" : "62vh" }}
+                >
+                  <div className="w-full max-w-[320px]">
+                    <ExplorationCard
+                      item={item}
+                      openItemLabel={copy.openItemLabel}
+                      placeholderLabel={copy.placeholderLabel}
+                      reducedMotion={reducedMotion}
+                    />
                   </div>
-                ))}
-                <div className="h-[80vh] shrink-0" />
-              </div>
+                </div>
+              ))}
+              <div className="h-[80vh] shrink-0" />
             </div>
           </div>
         </div>
-      </section>
-
-    </>
+      </div>
+    </section>
   );
 }

@@ -7,13 +7,8 @@ import {
 } from "framer-motion";
 import { useRef } from "react";
 import { withBasePath } from "../lib/assetPath";
+import type { LandingCopy } from "../lib/translations";
 
-const paragraph1 =
-  "We're building a space where curiosity meets clarity - where readers find depth, writers find reach, and every newsletter becomes a conversation worth having.";
-const paragraph2 =
-  "A platform where content, community, and insight flow together - with less noise, less friction, and more meaning for everyone involved.";
-
-const paragraph1Words = paragraph1.split(" ");
 const highlightRevealBaseDuration = 0.25;
 const highlightRevealPerLetter = 0.055;
 const highlightFadeDuration = 0.45;
@@ -51,47 +46,12 @@ const Word = ({ word, i, total, scrollYProgress }: WordProps) => {
   return (
     <motion.span
       style={{ opacity }}
-      className="inline-block mr-[0.25em] text-foreground"
+      className="mr-[0.25em] inline-block text-foreground"
     >
       {word}
     </motion.span>
   );
 };
-
-const animatedParagraph1Words: ParagraphWord[] = paragraph1Words.map((word) => ({
-  raw: word,
-  clean: word.replace(/[-,.]/g, ""),
-}));
-
-const highlightSequences = animatedParagraph1Words.reduce<HighlightSequence[]>(
-  (acc, word, index) => {
-    const targetWord = word.clean || word.raw;
-    const revealDuration =
-      highlightRevealBaseDuration + targetWord.length * highlightRevealPerLetter;
-    const duration = revealDuration + highlightFadeDuration;
-    const previousSequence = acc[index - 1];
-    const delay = previousSequence
-      ? previousSequence.delay +
-        previousSequence.revealDuration -
-        highlightOverlapDuration
-      : highlightInitialDelay;
-    const revealEnd = revealDuration / duration;
-    const plateauEnd = Math.min(
-      0.98,
-      (revealDuration + highlightPlateauDuration) / duration,
-    );
-
-    acc.push({
-      delay,
-      revealDuration,
-      duration,
-      times: [0, revealEnd, plateauEnd, 1],
-    });
-
-    return acc;
-  },
-  [],
-);
 
 interface HighlightWordProps {
   word: string;
@@ -107,11 +67,11 @@ const HighlightWord = ({
   reducedMotion,
 }: HighlightWordProps) => {
   if (reducedMotion) {
-    return <span className="inline-block mr-[0.25em] text-foreground">{word}</span>;
+    return <span className="mr-[0.25em] inline-block text-foreground">{word}</span>;
   }
 
   return (
-    <span className="relative inline-block mr-[0.25em] align-baseline">
+    <span className="relative mr-[0.25em] inline-block align-baseline">
       <span className="text-foreground/35">{word}</span>
       <motion.span
         className="pointer-events-none absolute left-0 top-0 overflow-hidden whitespace-nowrap text-foreground"
@@ -145,7 +105,11 @@ const HighlightWord = ({
   );
 };
 
-export default function MissionSection() {
+interface MissionSectionProps {
+  copy: LandingCopy["mission"];
+}
+
+export default function MissionSection({ copy }: MissionSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -156,11 +120,45 @@ export default function MissionSection() {
     amount: 0.45,
   });
   const reducedMotion = useReducedMotion();
+  const paragraph1Words = copy.paragraph1.split(" ");
+  const animatedParagraph1Words: ParagraphWord[] = paragraph1Words.map((word) => ({
+    raw: word,
+    clean: word.replace(/[-,.]/g, ""),
+  }));
+  const highlightSequences = animatedParagraph1Words.reduce<HighlightSequence[]>(
+    (acc, word, index) => {
+      const targetWord = word.clean || word.raw;
+      const revealDuration =
+        highlightRevealBaseDuration + targetWord.length * highlightRevealPerLetter;
+      const duration = revealDuration + highlightFadeDuration;
+      const previousSequence = acc[index - 1];
+      const delay = previousSequence
+        ? previousSequence.delay +
+          previousSequence.revealDuration -
+          highlightOverlapDuration
+        : highlightInitialDelay;
+      const revealEnd = revealDuration / duration;
+      const plateauEnd = Math.min(
+        0.98,
+        (revealDuration + highlightPlateauDuration) / duration,
+      );
 
-  const words2 = paragraph2.split(" ");
+      acc.push({
+        delay,
+        revealDuration,
+        duration,
+        times: [0, revealEnd, plateauEnd, 1],
+      });
+
+      return acc;
+    },
+    [],
+  );
+  const words2 = copy.paragraph2.split(" ");
 
   return (
     <section
+      id="philosophy"
       ref={containerRef}
       className="relative px-8 pb-32 pt-0 md:px-28 md:pb-44"
     >
@@ -199,7 +197,7 @@ export default function MissionSection() {
               >
                 <img
                   src={withBasePath("lego.png")}
-                  alt=""
+                  alt={copy.imageAlt}
                   className="w-[96%] max-w-[520px] object-contain opacity-95 drop-shadow-[0_28px_80px_rgba(0,0,0,0.72)] transition-opacity duration-700 group-hover:opacity-100"
                 />
               </motion.div>
@@ -208,11 +206,11 @@ export default function MissionSection() {
 
           <div className="order-1 max-w-2xl text-center lg:order-2 lg:ml-auto lg:text-right">
             <p className="mb-10 text-xl font-medium leading-tight tracking-[-0.02em] text-balance md:mb-12 md:text-3xl lg:text-4xl lg:leading-[1.1]">
-              {animatedParagraph1Words.map(({ raw }, i) => (
+              {animatedParagraph1Words.map(({ raw }, index) => (
                 <HighlightWord
-                  key={i}
+                  key={index}
                   word={raw}
-                  sequence={highlightSequences[i]}
+                  sequence={highlightSequences[index]}
                   shouldAnimate={isInView}
                   reducedMotion={reducedMotion}
                 />
@@ -220,11 +218,11 @@ export default function MissionSection() {
             </p>
 
             <p className="mx-auto max-w-xl text-base font-medium leading-relaxed text-foreground/90 md:text-lg lg:mr-0 lg:text-xl">
-              {words2.map((word, i) => (
+              {words2.map((word, index) => (
                 <Word
-                  key={i}
+                  key={index}
                   word={word}
-                  i={i}
+                  i={index}
                   total={words2.length}
                   scrollYProgress={scrollYProgress}
                 />
