@@ -16,6 +16,9 @@ import {
 } from "./lib/translations";
 
 const STORAGE_KEY = "hono-ai-language";
+const THEME_STORAGE_KEY = "hono-ai-ui-theme";
+
+type UiTheme = "dark" | "light";
 
 function getInitialLanguage(): Language {
   if (typeof window === "undefined") {
@@ -28,8 +31,18 @@ function getInitialLanguage(): Language {
     : DEFAULT_LANGUAGE;
 }
 
+function getInitialTheme(): UiTheme {
+  if (typeof window === "undefined") {
+    return "dark";
+  }
+
+  const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+  return savedTheme === "light" ? "light" : "dark";
+}
+
 export default function App() {
   const [language, setLanguage] = useState<Language>(getInitialLanguage);
+  const [uiTheme, setUiTheme] = useState<UiTheme>(getInitialTheme);
   const copy = landingCopy[language];
 
   useEffect(() => {
@@ -38,12 +51,24 @@ export default function App() {
     window.localStorage.setItem(STORAGE_KEY, language);
   }, [copy.metadata.title, language]);
 
+  useEffect(() => {
+    document.documentElement.dataset.uiTheme = uiTheme;
+    document.documentElement.style.colorScheme = uiTheme;
+    window.localStorage.setItem(THEME_STORAGE_KEY, uiTheme);
+  }, [uiTheme]);
+
   return (
     <main className="min-h-screen bg-background text-foreground selection:bg-foreground selection:text-background">
       <Navbar
         language={language}
         onLanguageChange={setLanguage}
         copy={copy.nav}
+        theme={uiTheme}
+        onThemeToggle={() =>
+          setUiTheme((currentTheme) =>
+            currentTheme === "dark" ? "light" : "dark",
+          )
+        }
       />
       <Hero copy={copy.hero} />
 

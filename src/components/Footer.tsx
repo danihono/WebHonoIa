@@ -1,6 +1,7 @@
 import { socialLinks } from "../lib/socialLinks";
 import { withBasePath } from "../lib/assetPath";
 import type { LandingCopy } from "../lib/translations";
+import AuricIndicator from "./ui/AuricIndicator";
 
 interface FooterProps {
   copy: LandingCopy["footer"];
@@ -21,16 +22,17 @@ export default function Footer({ copy }: FooterProps) {
             {copy.rightsText}
           </p>
         </div>
-        <div className="flex items-center gap-8">
+        <div className="flex flex-wrap items-center justify-center gap-3 md:justify-end">
           {socialLinks.map(({ label, href }) => (
             <a
               key={label}
               href={href}
               target="_blank"
               rel="noreferrer"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className="auric-button auric-pill-button text-xs font-semibold uppercase tracking-[0.18em]"
             >
-              {label}
+              <AuricIndicator className="auric-button-ring" />
+              <span className="auric-button-content">{label}</span>
             </a>
           ))}
         </div>

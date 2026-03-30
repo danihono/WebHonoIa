@@ -18,7 +18,7 @@ export default function Hero({ copy }: HeroProps) {
         loop
         muted
         playsInline
-        className="absolute inset-0 z-0 h-full w-full object-cover opacity-80"
+        className="absolute inset-0 z-0 h-full w-full object-cover object-[55%_center] opacity-80 md:object-center"
       >
         <source src={withBasePath("video.mp4")} type="video/mp4" />
       </video>

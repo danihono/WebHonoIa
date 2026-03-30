@@ -5,14 +5,14 @@ export const LANGUAGE_OPTIONS = [
     fullLabel: "Portugues (Brasil)",
   },
   {
-    code: "en",
-    shortLabel: "EN",
-    fullLabel: "English",
-  },
-  {
     code: "es",
     shortLabel: "ES",
     fullLabel: "Espanol",
+  },
+  {
+    code: "en",
+    shortLabel: "EN",
+    fullLabel: "English",
   },
 ] as const;
 
@@ -53,6 +53,7 @@ export interface LandingCopy {
     languageLabel: string;
     openMenuLabel: string;
     closeMenuLabel: string;
+    themeToggleLabel: string;
     items: NavItem[];
   };
   hero: {
@@ -159,6 +160,7 @@ export const landingCopy: Record<Language, LandingCopy> = {
       languageLabel: "Idioma",
       openMenuLabel: "Abrir menu",
       closeMenuLabel: "Fechar menu",
+      themeToggleLabel: "Alternar tema da barra",
       items: [
         { label: "Inicio", href: "#home" },
         { label: "Como funciona", href: "#how-it-works" },
@@ -268,6 +270,7 @@ export const landingCopy: Record<Language, LandingCopy> = {
       languageLabel: "Language",
       openMenuLabel: "Open menu",
       closeMenuLabel: "Close menu",
+      themeToggleLabel: "Toggle toolbar theme",
       items: [
         { label: "Home", href: "#home" },
         { label: "How It Works", href: "#how-it-works" },
@@ -377,6 +380,7 @@ export const landingCopy: Record<Language, LandingCopy> = {
       languageLabel: "Idioma",
       openMenuLabel: "Abrir menu",
       closeMenuLabel: "Cerrar menu",
+      themeToggleLabel: "Cambiar tema de la barra",
       items: [
         { label: "Inicio", href: "#home" },
         { label: "Como funciona", href: "#how-it-works" },

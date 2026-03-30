@@ -9,6 +9,7 @@ import type {
   LandingCopy,
 } from "../lib/translations";
 import { cn } from "../lib/utils";
+import AuricIndicator from "./ui/AuricIndicator";
 
 const halftoneStyle: CSSProperties = {
   backgroundImage:
@@ -115,10 +116,13 @@ function ExplorationCard({
               href={item.href}
               target="_blank"
               rel="noreferrer"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-black/55 text-white/82 transition duration-300 hover:border-white/28 hover:bg-black/72 hover:text-white"
+              className="auric-button auric-icon-button"
               aria-label={`${openItemLabel} ${item.title}`}
             >
-              <ArrowUpRight className="h-4 w-4" />
+              <AuricIndicator className="auric-button-ring" />
+              <span className="auric-button-content">
+                <ArrowUpRight className="h-4 w-4" />
+              </span>
             </a>
           </div>
         ) : null}

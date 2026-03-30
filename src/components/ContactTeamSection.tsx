@@ -3,6 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { withBasePath } from "../lib/assetPath";
 import type { LandingCopy } from "../lib/translations";
 import { socialLinks } from "../lib/socialLinks";
+import AuricIndicator from "./ui/AuricIndicator";
 
 const contactHref =
   socialLinks.find((link) => link.platform === "instagram")?.href ??
@@ -46,13 +47,14 @@ export default function ContactTeamSection({
           href={contactHref}
           target="_blank"
           rel="noreferrer"
-          className="liquid-glass inline-flex items-center gap-3 rounded-full px-6 py-3.5 text-sm font-medium tracking-[0.02em] text-white transition duration-300 hover:bg-white/10 hover:text-white md:px-7"
+          className="auric-button auric-cta-button inline-flex"
         >
-          <span>
+          <AuricIndicator className="auric-button-ring" />
+          <span className="auric-button-content">
             {copy.ctaPrefix}{" "}
             <span className="font-serif font-normal italic">{copy.ctaHighlight}</span>
+            <ArrowUpRight className="h-4 w-4" />
           </span>
-          <ArrowUpRight className="h-4 w-4" />
         </a>
       </motion.div>
     </section>
