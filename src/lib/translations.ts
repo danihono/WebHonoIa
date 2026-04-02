@@ -2,12 +2,12 @@ export const LANGUAGE_OPTIONS = [
   {
     code: "pt-BR",
     shortLabel: "PT",
-    fullLabel: "Portugues (Brasil)",
+    fullLabel: "Português (Brasil)",
   },
   {
     code: "es",
     shortLabel: "ES",
-    fullLabel: "Espanol",
+    fullLabel: "Español",
   },
   {
     code: "en",
@@ -162,94 +162,94 @@ export const landingCopy: Record<Language, LandingCopy> = {
       closeMenuLabel: "Fechar menu",
       themeToggleLabel: "Alternar tema da barra",
       items: [
-        { label: "Inicio", href: "#home" },
+        { label: "Início", href: "#home" },
         { label: "Como funciona", href: "#how-it-works" },
         { label: "Filosofia", href: "#philosophy" },
-        { label: "Solucao", href: "#solution" },
+        { label: "Solução", href: "#solution" },
       ],
     },
     hero: {
       titlePrefix: "Encontre",
-      titleHighlight: "inspiracao",
+      titleHighlight: "inspiração",
       titleSuffix: "com a gente.",
       description:
-        "Acompanhe nosso feed para receber novidades relevantes, atualizacoes sobre tecnologia e uma jornada compartilhada com mais profundidade e direcao.",
+        "Acompanhe nosso feed para receber novidades relevantes, atualizações sobre tecnologia e uma jornada compartilhada com mais profundidade e direção.",
     },
     search: {
       titlePrefix: "A forma de buscar",
       titleHighlight: "mudou.",
       titleSuffix: "Sua marca acompanhou?",
       description:
-        "As pessoas nao pesquisam mais so por palavras-chave. Elas fazem perguntas que Codex, Claude e Google respondem. As marcas que crescem hoje sao as que aparecem nessas respostas.",
+        "As pessoas não pesquisam mais só por palavras-chave. Elas fazem perguntas que Codex, Claude e Google respondem. As marcas que crescem hoje são as que aparecem nessas respostas.",
       platforms: [
         {
           ...searchPlatformVisuals[0],
           description:
-            "Ganha espaco quando seu conteudo e estruturado, confiavel e claro o suficiente para ser reaproveitado dentro das respostas.",
+            "Ganha espaço quando seu conteúdo é estruturado, confiável e claro o suficiente para ser reaproveitado dentro das respostas.",
         },
         {
           ...searchPlatformVisuals[1],
           description:
-            "Valoriza explicacoes bem pensadas, contexto forte e paginas que realmente ajudem pessoas reais.",
+            "Valoriza explicações bem pensadas, contexto forte e páginas que realmente ajudem pessoas reais.",
         },
         {
           ...searchPlatformVisuals[2],
           description:
-            "Destaca paginas que respondem a pergunta completa com autoridade, profundidade e clareza.",
+            "Destaca páginas que respondem à pergunta completa com autoridade, profundidade e clareza.",
         },
       ],
-      footer: "Se voce nao responde as perguntas, outra marca responde por voce.",
+      footer: "Se você não responde às perguntas, outra marca responde por você.",
     },
     mission: {
       paragraph1:
-        "Estamos construindo um espaco onde curiosidade encontra clareza, leitores encontram profundidade e cada newsletter vira uma conversa que vale a pena acompanhar.",
+        "Estamos construindo um espaço onde curiosidade encontra clareza, leitores encontram profundidade e cada newsletter vira uma conversa que vale a pena acompanhar.",
       paragraph2:
-        "Uma plataforma onde conteudo, comunidade e insight caminham juntos, com menos ruido, menos friccao e mais significado para todo mundo.",
-      imageAlt: "Ilustracao abstrata com blocos empilhados",
+        "Uma plataforma onde conteúdo, comunidade e insight caminham juntos, com menos ruído, menos fricção e mais significado para todo mundo.",
+      imageAlt: "Ilustração abstrata com blocos empilhados",
     },
     solution: {
-      eyebrow: "SOLUCAO",
-      titlePrefix: "A plataforma para conteudo",
+      eyebrow: "SOLUÇÃO",
+      titlePrefix: "A plataforma para conteúdo",
       titleHighlight: "relevante",
       titleSuffix: "de verdade",
       features: [
         {
           title: "Feed Curado",
           description:
-            "Um fluxo personalizado de conteudo de alta qualidade alinhado aos seus interesses.",
+            "Um fluxo personalizado de conteúdo de alta qualidade alinhado aos seus interesses.",
         },
         {
           title: "Ferramentas para autores",
           description:
-            "Recursos de publicacao criados para dar clareza, consistencia e alcance.",
+            "Recursos de publicação criados para dar clareza, consistência e alcance.",
         },
         {
           title: "Comunidade",
           description:
-            "Conversas significativas que vao alem da caixa de entrada.",
+            "Conversas significativas que vão além da caixa de entrada.",
         },
         {
-          title: "Distribuicao Inteligente",
+          title: "Distribuição Inteligente",
           description:
-            "Sistemas que ajudam o seu melhor trabalho a encontrar a audiencia certa.",
+            "Sistemas que ajudam o seu melhor trabalho a encontrar a audiência certa.",
         },
       ],
     },
     explorations: {
-      eyebrow: "EXPLORACOES",
-      titlePrefix: "Laboratorio",
+      eyebrow: "EXPLORAÇÕES",
+      titlePrefix: "Laboratório",
       titleHighlight: "visual",
       description:
-        "Um espaco para experimentos criativos, estudos de movimento e exploracoes visuais.",
-      placeholderLabel: "Previa visual",
+        "Um espaço para experimentos criativos, estudos de movimento e explorações visuais.",
+      placeholderLabel: "Prévia visual",
       openItemLabel: "Abrir",
       items: [
         { ...explorationMedia[0], title: "Planetas Celestiais" },
         { ...explorationMedia[1], title: "Estudo em ASCII" },
-        { ...explorationMedia[2], title: "Fumaca Atmosferica" },
+        { ...explorationMedia[2], title: "Fumaça Atmosférica" },
         { ...explorationMedia[3], title: "Cilindro Abstrato" },
-        { ...explorationMedia[4], title: "Ondas Organicas" },
-        { ...explorationMedia[5], title: "Cubos Geometricos" },
+        { ...explorationMedia[4], title: "Ondas Orgânicas" },
+        { ...explorationMedia[5], title: "Cubos Geométricos" },
       ],
     },
     contact: {
@@ -378,57 +378,57 @@ export const landingCopy: Record<Language, LandingCopy> = {
     nav: {
       backLabel: "Volver",
       languageLabel: "Idioma",
-      openMenuLabel: "Abrir menu",
-      closeMenuLabel: "Cerrar menu",
+      openMenuLabel: "Abrir menú",
+      closeMenuLabel: "Cerrar menú",
       themeToggleLabel: "Cambiar tema de la barra",
       items: [
         { label: "Inicio", href: "#home" },
-        { label: "Como funciona", href: "#how-it-works" },
-        { label: "Filosofia", href: "#philosophy" },
-        { label: "Solucion", href: "#solution" },
+        { label: "Cómo funciona", href: "#how-it-works" },
+        { label: "Filosofía", href: "#philosophy" },
+        { label: "Solución", href: "#solution" },
       ],
     },
     hero: {
       titlePrefix: "Encuentra",
-      titleHighlight: "inspiracion",
+      titleHighlight: "inspiración",
       titleSuffix: "con nosotros.",
       description:
-        "Sigue nuestro feed para recibir novedades relevantes, noticias sobre tecnologia y un camino compartido con mas profundidad y direccion.",
+        "Sigue nuestro feed para recibir novedades relevantes, noticias sobre tecnología y un camino compartido con más profundidad y dirección.",
     },
     search: {
       titlePrefix: "La forma de buscar",
-      titleHighlight: "cambio.",
-      titleSuffix: "Tu marca acompanio el cambio?",
+      titleHighlight: "cambió.",
+      titleSuffix: "¿Tu marca acompañó el cambio?",
       description:
         "Las personas ya no buscan solo con palabras clave. Hacen preguntas que Codex, Claude y Google responden. Las marcas que crecen hoy son las que aparecen dentro de esas respuestas.",
       platforms: [
         {
           ...searchPlatformVisuals[0],
           description:
-            "Gana espacio cuando tu contenido esta estructurado, es confiable y lo bastante claro para reutilizarse dentro de las respuestas.",
+            "Gana espacio cuando tu contenido está estructurado, es confiable y lo bastante claro para reutilizarse dentro de las respuestas.",
         },
         {
           ...searchPlatformVisuals[1],
           description:
-            "Valora explicaciones bien pensadas, contexto solido y paginas que realmente ayuden a personas reales.",
+            "Valora explicaciones bien pensadas, contexto sólido y páginas que realmente ayuden a personas reales.",
         },
         {
           ...searchPlatformVisuals[2],
           description:
-            "Destaca paginas que responden la pregunta completa con autoridad, profundidad y claridad.",
+            "Destaca páginas que responden la pregunta completa con autoridad, profundidad y claridad.",
         },
       ],
-      footer: "Si no respondes las preguntas, otra marca lo hara.",
+      footer: "Si no respondes las preguntas, otra marca lo hará.",
     },
     mission: {
       paragraph1:
-        "Estamos construyendo un espacio donde la curiosidad se encuentra con la claridad, los lectores encuentran profundidad y cada newsletter se vuelve una conversacion que vale la pena seguir.",
+        "Estamos construyendo un espacio donde la curiosidad se encuentra con la claridad, los lectores encuentran profundidad y cada newsletter se vuelve una conversación que vale la pena seguir.",
       paragraph2:
-        "Una plataforma donde contenido, comunidad e insight avanzan juntos, con menos ruido, menos friccion y mas significado para todos.",
-      imageAlt: "Ilustracion abstracta con bloques apilados",
+        "Una plataforma donde contenido, comunidad e insight avanzan juntos, con menos ruido, menos fricción y más significado para todos.",
+      imageAlt: "Ilustración abstracta con bloques apilados",
     },
     solution: {
-      eyebrow: "SOLUCION",
+      eyebrow: "SOLUCIÓN",
       titlePrefix: "La plataforma para contenido",
       titleHighlight: "relevante",
       titleSuffix: "de verdad",
@@ -441,15 +441,15 @@ export const landingCopy: Record<Language, LandingCopy> = {
         {
           title: "Herramientas para autores",
           description:
-            "Recursos de publicacion creados para aportar claridad, consistencia y alcance.",
+            "Recursos de publicación creados para aportar claridad, consistencia y alcance.",
         },
         {
           title: "Comunidad",
           description:
-            "Conversaciones significativas que van mas alla de la bandeja de entrada.",
+            "Conversaciones significativas que van más allá de la bandeja de entrada.",
         },
         {
-          title: "Distribucion Inteligente",
+          title: "Distribución Inteligente",
           description:
             "Sistemas que ayudan a que tu mejor trabajo encuentre a la audiencia correcta.",
         },
@@ -466,10 +466,10 @@ export const landingCopy: Record<Language, LandingCopy> = {
       items: [
         { ...explorationMedia[0], title: "Planetas Celestiales" },
         { ...explorationMedia[1], title: "Estudio ASCII" },
-        { ...explorationMedia[2], title: "Humo Atmosferico" },
+        { ...explorationMedia[2], title: "Humo Atmosférico" },
         { ...explorationMedia[3], title: "Cilindro Abstracto" },
-        { ...explorationMedia[4], title: "Ondas Organicas" },
-        { ...explorationMedia[5], title: "Cubos Geometricos" },
+        { ...explorationMedia[4], title: "Ondas Orgânicas" },
+        { ...explorationMedia[5], title: "Cubos Geométricos" },
       ],
     },
     contact: {
