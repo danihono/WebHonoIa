@@ -169,11 +169,10 @@ export const landingCopy: Record<Language, LandingCopy> = {
       ],
     },
     hero: {
-      titlePrefix: "Encontre",
-      titleHighlight: "inspiração",
-      titleSuffix: "com a gente.",
-      description:
-        "Acompanhe nosso feed para receber novidades relevantes, atualizações sobre tecnologia e uma jornada compartilhada com mais profundidade e direção.",
+      titlePrefix: "Transformamos seu",
+      titleHighlight: "negoócio",
+      titleSuffix: "em maquinas digitais",
+      description: "",
     },
     search: {
       titlePrefix: "A forma de buscar",

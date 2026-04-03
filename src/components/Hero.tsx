@@ -35,12 +35,14 @@ export default function Hero({ copy }: HeroProps) {
           {copy.titleSuffix}
         </motion.h1>
 
-        <motion.p
-          {...fadeUp(0.6)}
-          className="mx-auto max-w-2xl text-sm leading-relaxed text-hero-subtitle md:text-base"
-        >
-          {copy.description}
-        </motion.p>
+        {copy.description ? (
+          <motion.p
+            {...fadeUp(0.6)}
+            className="mx-auto max-w-2xl text-sm leading-relaxed text-hero-subtitle md:text-base"
+          >
+            {copy.description}
+          </motion.p>
+        ) : null}
       </div>
     </section>
   );
